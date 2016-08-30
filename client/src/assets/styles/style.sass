@@ -1,0 +1,112 @@
+$body: #3B404F
+$orange: #e67e22
+$blue: #3498db
+$post-height: 150px
+$post-bg: darken($body, 15%)
+$text-white: white
+
+body
+  background-color: $body
+
+.sidebar-left
+  position: fixed
+  overflow: hidden
+  top: 0px
+  width: 15%
+  height: 100%
+  background-color: lighten($post-bg, 5)
+  color: $text-white
+
+.sidebar-content
+  position: fixed
+  overflow: hidden
+  top: 0
+  right: 0
+  width: 32.1%
+  height: 100%
+  color: $text-white
+
+  iframe
+    height: 100%
+    width: 100%
+
+.main
+  padding-left: 15%
+  width: 70%
+
+.post-container
+  [class *= col-md]
+    padding: 0
+    height: $post-height
+    color: $text-white
+
+  .post-panel
+    height: 100%
+    border: none
+    border-radius: 0
+    margin-bottom: 0
+    background-color: $post-bg
+    padding: 5px 5px
+    border-left: 2px solid transparent
+    border-bottom: 2px solid lighten($post-bg, 5)
+    transition: all .3s ease
+
+    img
+      max-height: $post-height - 4px
+
+  .votes
+    .btn.vote
+      height: $post-height / 3
+      border: none
+      border-radius: 0
+      margin-top: 0
+      color: $text-white
+      transition: color .2s ease
+      transition: background-color .3s ease
+
+      &.up
+        color: $orange
+        background-color: $post-bg
+
+        &:hover
+          color: $text-white
+          background-color: $orange
+
+      &.down
+        color: $blue
+        background-color: $post-bg
+
+        &:hover
+          color: $text-white
+          background-color: $blue
+
+      &.count
+        background-color: $post-bg
+
+  &.active
+    .post-panel
+      border-bottom: 2px solid transparent
+      border-left: 2px solid $orange
+      background-color: $body
+
+    .btn.vote
+      &.up
+        background-color: $body
+
+        &:hover
+          background-color: $orange
+
+      &.down
+        background-color: $body
+
+        &:hover
+          background-color: $blue
+
+      &.count
+        background-color: $body
+
+
+
+
+
+  

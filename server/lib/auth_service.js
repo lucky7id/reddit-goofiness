@@ -4,7 +4,7 @@ import {ERRORS} from './constants';
 import jwt from 'jsonwebtoken';
 
 export const authRoute = (clientId, type = 'code', rand, uri, duration = 'permanent', scope) => {
-    return `https://www.reddit.com/api/v1/authorize?client_id=${clientId}&response_type=${type}&state=${rand}&redirect_uri=${uri}&duration=${duration}&scope=${scope}`
+    return `https://www.reddit.com/api/v1/authorize?client_id=${clientId}&response_type=${type}&state=${rand}&redirect_uri=${uri}&duration=${duration}&scope=${scope}`;
 }
 
 class AuthFetcher extends Fetcher {
@@ -44,9 +44,8 @@ export class AuthService {
     *handleRedirect (req, res) {
         const token = yield this.getAccessToken(req.query.code);
         const appToken = jwt.sign(token, this.config.jwtSecret);
-        console.log(token, appToken);
 
-        res.redirect(`localhost:8080/auth/success/${token}`)
+        res.redirect(`localhost:8080/auth/success/${token}`);
 
         return appToken;
     }
