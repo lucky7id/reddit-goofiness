@@ -32,4 +32,6 @@ export const rootReducer = (state = defaultState, action) => {
     if (action.type === SET_TOKEN) {
         return handleNewToken(state, action);
     }
+
+    return state;
 }

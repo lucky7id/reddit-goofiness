@@ -50,9 +50,12 @@ const FE = {
     module: {
         loaders: [
             {
-              test: /\.(js|jsx)$/,
-              loaders: [`babel-loader?presets[]=react,presets[]=es2015,passPerPreset=true`],
-              include: path.join(__dirname, 'src', 'client'),
+              test: /\.js$/,
+              loader: 'babel-loader',
+              query: {
+                  presets: ['react', 'es2015']
+              },
+              exclude: /node_modules/,
 
             },
             /*
@@ -97,7 +100,7 @@ const FE = {
     },
 
     sassLoader: {
-        includePaths: [path.resolve(__dirname, 'client/src/assets')]
+        includePaths: [path.resolve(__dirname, 'client/assets')]
     },
 
     plugins: [
@@ -154,7 +157,7 @@ const FE = {
             poll: 1000
         },
         outputPath: './dist',
-        contentBase: path.join(__dirname, 'src/client/src')
+        contentBase: path.join(__dirname, 'client/src')
     }
 };
 

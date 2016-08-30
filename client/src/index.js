@@ -4,17 +4,22 @@ require('../assets/styles/style.sass');
 import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
-import { createStore, applyMiddleware, compose } from 'redux';
+import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 import ReduxThunk from 'redux-thunk';
-import { Router, Route, IndexRoute, browserHistory } from 'react-router';
+import { Router, Route, IndexRoute, browserHistory} from 'react-router';
 import { syncHistoryWithStore, routerReducer } from 'react-router-redux';
 import { rootReducer } from './domain/main.js';
 import App from './ui/app.js';
 
-const initialState = {}
+const initialState = {
+    routing: undefined
+}
 
 const store = createStore(
-    rootReducer,
+    combineReducers({
+        app: rootReducer,
+        routing: routerReducer
+    }),
     initialState,
     compose(
         applyMiddleware(ReduxThunk),
