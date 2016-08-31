@@ -8,7 +8,6 @@ class SidebarContent extends React.Component {
 
     constructor(props) {
         super(props);
-        console.log(props)
     }
 
     content() {

@@ -31,6 +31,8 @@ app
         ))
     })
     .get('/auth/callback', auth.handleRedirect.bind(auth))
+    .get('/token', auth.handleTokenRequest.bind(auth))
+    .get('/token/refresh', auth.handleTokenRefresh.bind(auth))
     .listen(3002, () => {
         console.log('Reddit app listening on port 3002!');
     });

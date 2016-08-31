@@ -25,10 +25,10 @@ export default class Fetcher {
                 // catch the error codes we need to handle
                 switch (response.statusCode) {
                     case 401:
-                        reject({error: ERRORS.http['401']})
+                        reject({code: 401, error: ERRORS.http['401']})
                         return;
                     case 500:
-                        reject({error: ERRORS.http['500']})
+                        reject({code: 500, error: ERRORS.http['500']})
                         return;
                 }
 

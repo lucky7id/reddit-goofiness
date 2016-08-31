@@ -2,6 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import Post from '../components/post';
 import {mapDispatchToProps, mapStateToProps} from '../../domain/posts';
+import Waypoint from 'react-waypoint';
 
 class MainContent extends React.Component {
 
@@ -21,6 +22,10 @@ class MainContent extends React.Component {
         })
     }
 
+    loadMore(e) {
+        console.log(this, e);
+    }
+
     render() {
         return (
             <div className="main">
@@ -28,6 +33,7 @@ class MainContent extends React.Component {
                 <div className="row">
                   <div className="col-md-12">
                     {this.makePosts()}
+                    <Waypoint onEnter={this.loadMore} />
                   </div>
                 </div>
               </div>

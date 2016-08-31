@@ -13,10 +13,10 @@ const setToken = (token) => {
 }
 
 export const getTokenFromStorage = (dispatch) => {
-    const token = localStorage.getItem('yukisnoo');
+    const token = localStorage.getItem('snuki');
 
     if (token) {
-        app.dispatch(setToken(tokwn))
+        app.dispatch(setToken(token))
     }
 }
 
