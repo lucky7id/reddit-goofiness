@@ -25,7 +25,7 @@ const appLoad = () => {
 }
 
 const handleNewToken = (state = {}, action) => {
-    newState = Object.create({}, state, {token: action.payload.token})
+    newState = Object.assign({}, state, {token: action.payload.token})
 }
 
 export const rootReducer = (state = defaultState, action) => {

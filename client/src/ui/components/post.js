@@ -5,19 +5,25 @@ export default class Post extends React.Component {
 
     constructor(props) {
         super(props);
+        this.select = this.select.bind(this);
+    }
+
+    select() {
+        this.props.select(this.props.body)
     }
 
     render() {
+        const post = this.props.body.data
         return (
-            <div className="post-container">
+            <div className={`post-container ${this.props.selected === post.id ? 'active' : ''}`}>
               <div className="row">
-                <div className="col-md-11">
+                <div className="col-md-11" onClick={this.select}>
                   <div className="media post-panel">
                     <div className="media-left">
                       <img className="media-object" src="https://i.imgflip.com/19pdpk.jpg" alt="..." />
                     </div>
                     <div className="media-body">
-                      <h4 className="media-heading">Media heading</h4> some post text
+                      <h4 className="media-heading">{post.title}</h4>
                     </div>
                   </div>
                 </div>

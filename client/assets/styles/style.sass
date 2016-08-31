@@ -34,6 +34,14 @@ body
   iframe
     height: 100%
     width: 100%
+    opacity: 0
+    transition: opacity 1s ease
+
+    &.loading
+      opacity: 0
+
+    &.loaded
+      opacity: 1
 
 .main
   padding-left: 15%

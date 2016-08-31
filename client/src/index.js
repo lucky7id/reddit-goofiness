@@ -8,17 +8,27 @@ import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 import ReduxThunk from 'redux-thunk';
 import { Router, Route, IndexRoute, browserHistory} from 'react-router';
 import { syncHistoryWithStore, routerReducer } from 'react-router-redux';
-import { rootReducer } from './domain/main.js';
-import App from './ui/app.js';
+import { rootReducer } from './domain/main';
+import { postsReducer } from './domain/posts';
+import { contentReducer } from './domain/content-sidebar';
+
+console.log(contentReducer)
+
+import App from './ui/app';
 
 const initialState = {
-    routing: undefined
+    routing: undefined,
+    posts: undefined,
+    app: undefined,
+    contentBar: undefined
 }
 
 const store = createStore(
     combineReducers({
         app: rootReducer,
-        routing: routerReducer
+        posts: postsReducer,
+        routing: routerReducer,
+        contentBar: contentReducer
     }),
     initialState,
     compose(
