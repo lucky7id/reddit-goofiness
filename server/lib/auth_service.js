@@ -110,11 +110,12 @@ export class AuthService {
     }
 
     *handleTokenRequest (req, res) {
-        let decoded = yield this.verifyToken(req.query.token);
-
-        if (!decoded || !decoded.client_secret) {
-            return res.status(401).json({error: ERRORS.http['401']})
-        }
+        // handle locking this down later
+        // let decoded = yield this.verifyToken(req.query.token);
+        //
+        // if (!decoded || !decoded.client_secret) {
+        //     return res.status(401).json({error: ERRORS.http['401']})
+        // }
 
         let token = yield this.getTempAccessToken();
 

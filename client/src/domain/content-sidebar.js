@@ -16,7 +16,7 @@ const handleLoading = (state, action) => {
     return Object.assign({}, state, {isLoading: action.payload.isLoading});
 }
 
-export const contentReducer = (state = initialState, action) => {    
+export const contentReducer = (state = initialState, action) => {
     if (action.type === CONTENT_LOADING) {
         return handleLoading(state, action);
     }

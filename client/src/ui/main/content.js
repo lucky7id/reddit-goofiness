@@ -8,7 +8,8 @@ class MainContent extends React.Component {
 
     constructor(props) {
         super(props);
-        //this.props.dispatch(getConfig())
+        this.props.requestPosts('frontpage');
+        this.loadMore = this.loadMore.bind(this);
     }
 
     makePosts() {
@@ -23,17 +24,28 @@ class MainContent extends React.Component {
     }
 
     loadMore(e) {
-        console.log(this, e);
+        this.props.loadMore();
     }
 
     render() {
         return (
             <div className="main">
+              <nav className="navbar navbar-inverse navbar-fixed-top">
+                <div className="container-fluid">
+                  <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul className="nav navbar-nav">
+                      <li><a href="#">Top</a></li>
+                      <li><a href="#">Hot</a></li>
+                      <li><a href="#">New</a></li>
+                    </ul>
+                  </div>
+                </div>
+              </nav>
               <div className="container-fluid">
                 <div className="row">
                   <div className="col-md-12">
                     {this.makePosts()}
-                    <Waypoint onEnter={this.loadMore} />
+                    {this.props.posts.length && <Waypoint onEnter={this.loadMore} />}
                   </div>
                 </div>
               </div>

@@ -8,6 +8,15 @@ class SidebarContent extends React.Component {
 
     constructor(props) {
         super(props);
+        this.toggleExpanded = this.toggleExpanded.bind(this);
+        this.state = {
+            isExpanded: false
+        }
+    }
+
+    toggleExpanded(e) {
+        e.preventDefault();
+        this.setState({isExpanded: !this.state.isExpanded})
     }
 
     content() {
@@ -21,8 +30,24 @@ class SidebarContent extends React.Component {
 
     render() {
         return (
-            <div className="sidebar-content">
-                {this.content()}
+            <div className={`sidebar-content ${this.state.isExpanded ? 'expanded' : ''}`}>
+              <nav className="navbar navbar-inverse navbar-fixed-top">
+                <div className="container-fluid">
+                  <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul className="nav navbar-nav">
+                      <li onClick={this.toggleExpanded}>
+                        <a href="#">
+                        {this.state.isExpanded ?
+                          <i className="material-icons">close</i> :
+                          <i className="material-icons">arrow_back</i>
+                        }
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </nav>
+              {this.content()}
             </div>
         )
     }

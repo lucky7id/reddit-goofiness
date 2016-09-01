@@ -1,9 +1,12 @@
-const posts = require('../../posts.json');
+import {SET_TOKEN} from './main';
+import Fetcher from './fetcher';
+
+const fetcher = new Fetcher();
 const initialState = {
     selected: undefined,
     loading: false,
-    items: posts.data.children,
-    listing: posts.data
+    items: [],
+    listing: {}
 }
 
 // When a user clicks on a post
@@ -29,7 +32,7 @@ const addPosts = (listing) => {
 }
 
 const handleAddPosts = (state = {}, action) => {
-    newItems = [...state.items, ...action.payload.data.children];
+    const newItems = [...state.items, ...action.payload.data.children];
 
     return Object.assign({}, state, {
         items: newItems,
@@ -38,14 +41,38 @@ const handleAddPosts = (state = {}, action) => {
 }
 
 // Get some posts async
-const requestPosts = (subreddit, after) => {
-    
+const requestPosts = (subreddit, prevListing) => {
+    return dispatch => {
+        if (subreddit === 'frontpage') {
+            fetcher.getFrontPage(prevListing).then(listing => {
+                dispatch(addPosts(listing));
+            });
+
+            return;
+        }
+
+        fetcher.getPage(subreddit, prevListing).then(listing => {
+            dispatch(addPosts(listing));
+        })
+    }
+}
+
+// load more posts
+const loadMore = () => {
+    return (dispatch, getState) => {
+        const {posts} = getState();
+        dispatch(requestPosts('frontpage', posts.listing));
+    }
 }
 
 // root reducer for posts
 export const postsReducer = (state = initialState, action) => {
     if (action.type === SELECT_POST) {
         return handleSelectPost(state, action);
+    }
+
+    if (action.type === ADD_POSTS) {
+        return handleAddPosts(state, action);
     }
 
     return state;
@@ -55,7 +82,13 @@ export const postsReducer = (state = initialState, action) => {
 export const mapDispatchToProps = (dispatch) => {
     return {
         selectPost: (post) => {
-            return dispatch(selectPost(post))
+            return dispatch(selectPost(post));
+        },
+        requestPosts: (subreddit, listing) => {
+            return dispatch(requestPosts(subreddit, listing));
+        },
+        loadMore: () => {
+            return dispatch(loadMore());
         }
     }
 }

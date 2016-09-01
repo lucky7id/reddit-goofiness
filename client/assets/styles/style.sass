@@ -25,11 +25,22 @@ body
 .sidebar-content
   position: fixed
   overflow: hidden
+  padding-top: 51px
   top: 0
   right: 0
   width: 32.1%
   height: 100%
   color: $text-white
+  transition: width .5s ease
+  z-index: 1040
+  background-color: $body
+
+  nav
+    left: 100% - 32.1%
+    right:  0
+    background-color: lighten($post-bg, 5)
+    transition: left .5s ease
+    max-height: 51px
 
   iframe
     height: 100%
@@ -43,9 +54,21 @@ body
     &.loaded
       opacity: 1
 
+  &.expanded
+    width: 100%
+
+    nav
+      left: 0
+
 .main
   padding-left: 15%
+  padding-top: 51px
   width: 70%
+
+  nav
+    left: 15%
+    right: 32.1%
+    background-color: lighten($post-bg, 5)
 
 .post-container
   [class *= col-md]
@@ -65,7 +88,11 @@ body
     transition: all .3s ease
 
     img
-      max-height: $post-height - 4px
+      height: $post-height - 4px
+      max-width: $post-height - 4px
+
+    .media-heading
+      font-size: 16px
 
   .votes
     .btn.vote

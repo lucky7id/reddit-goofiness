@@ -1,5 +1,8 @@
+import Fetcher from '../domain/fetcher';
+
+const fetcher = new Fetcher();
 const defaultState = {
-    token: undefined
+    loading: true
 }
 
 export const SET_TOKEN = 'SET_TOKEN';
@@ -16,22 +19,31 @@ export const getTokenFromStorage = (dispatch) => {
     const token = localStorage.getItem('snuki');
 
     if (token) {
-        app.dispatch(setToken(token))
+        dispatch(setToken(token));
+        fetcher.setAuthToken(token);
+        return;
     }
+}
+
+export const fetchNewToken = (dispatch) => {
+    fetcher.updateToken()
+        .then(token => {
+            dispatch(setToken(token));
+        })
 }
 
 const appLoad = () => {
     return getTokenFromStorage;
 }
 
-const handleNewToken = (state = {}, action) => {
-    newState = Object.assign({}, state, {token: action.payload.token})
+export const rootReducer = (state = defaultState, action) => {
+    return state;
 }
 
-export const rootReducer = (state = defaultState, action) => {
-    if (action.type === SET_TOKEN) {
-        return handleNewToken(state, action);
+export const mapDispatchToProps = (dispatch) => {
+    return {
+        appLoad: () => {
+            return dispatch(appLoad())
+        }
     }
-
-    return state;
 }

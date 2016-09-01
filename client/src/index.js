@@ -1,6 +1,5 @@
 // stylesheets for webpack loader
 require('../assets/styles/style.sass');
-
 import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
@@ -11,9 +10,6 @@ import { syncHistoryWithStore, routerReducer } from 'react-router-redux';
 import { rootReducer } from './domain/main';
 import { postsReducer } from './domain/posts';
 import { contentReducer } from './domain/content-sidebar';
-
-console.log(contentReducer)
-
 import App from './ui/app';
 
 const initialState = {

@@ -1,5 +1,6 @@
 import Promise from 'bluebird';
-import jwt from 'jsonwebtoken';
+import decode from 'jwt-decode';
+import $ from 'jquery';
 
 
 export default class TokenService {
@@ -12,6 +13,8 @@ export default class TokenService {
             this.verifyToken(token)
                 .then(decoded => {
                     this.token = decoded;
+                    this.raw = token;
+
                     resolve(this.token);
                 })
                 .catch(e => {
@@ -23,11 +26,13 @@ export default class TokenService {
     updateWithRefreshToken() {
         return new Promise((resolve, reject) => {
             $
-                .get(`${this.config.app.baseUrl}/token/refresh?token=${this.token}`)
-                .done(token => {
-                    this.verifyToken(token)
+                .get(`${this.config.app.baseUrl}/token/refresh?token=${this.raw}`)
+                .done(res => {
+                    this.verifyToken(res.token)
                         .then(decoded => {
                             this.token = decoded;
+                            this.raw = res.token;
+                            localStorage.setItem('snuki', res.token);
                             resolve(this.token);
                         })
                         .catch(e => {
@@ -41,20 +46,24 @@ export default class TokenService {
     }
 
     getDefaultToken() {
-        const tempToken = jwt.sign({
-            client_secret: this.config.client_secret
-        }, this.config.jwtSecret)
+        // we'll deal with locking this down later
+        // const tempToken = jwt.sign({
+        //     client_secret: this.config.client_secret
+        // }, this.config.jwtSecret)
 
         return new Promise((resolve, reject) => {
             $
-                .get(`${this.config.app.baseUrl}/token/?token=${tempToken}`)
-                .done(token => {
-                    this.verifyToken(token)
+                .get(`${this.config.app.baseUrl}/token`)
+                .done(res => {
+                    this.verifyToken(res.token)
                         .then(decoded => {
                             this.token = decoded;
+                            this.raw = res.token;
+                            localStorage.setItem('snuki', res.token);
                             resolve(this.token);
                         })
                         .catch(e => {
+                            console.log(e);
                             reject({step: 'token'})
                         })
                 })
@@ -76,11 +85,15 @@ export default class TokenService {
 
     verifyToken(token) {
         return new Promise((resolve, reject) => {
-            const token = jwt.verify(token, config.jwtSecret, (e, decoded) => {
-                if (e) return reject(e);
+            let decoded
+            try {
+                decoded = decode(token);
+            } catch (e) {
+                reject(e);
+                return;
+            }
 
-                resolve(decoded);
-            });
+            resolve(decoded);
         });
     }
 }

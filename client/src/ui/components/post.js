@@ -20,10 +20,11 @@ export default class Post extends React.Component {
                 <div className="col-md-11" onClick={this.select}>
                   <div className="media post-panel">
                     <div className="media-left">
-                      <img className="media-object" src="https://i.imgflip.com/19pdpk.jpg" alt="..." />
+                      {post.thumbnail && <img className="media-object" src={post.thumbnail} alt="..." />}
                     </div>
                     <div className="media-body">
                       <h4 className="media-heading">{post.title}</h4>
+
                     </div>
                   </div>
                 </div>
